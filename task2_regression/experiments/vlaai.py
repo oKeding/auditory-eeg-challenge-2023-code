@@ -43,7 +43,7 @@ if __name__ == "__main__":
     epochs = 100
     patience = 5
     batch_size = 64
-    only_evaluate = False
+    only_evaluate = True
     training_log_filename = "training_log.csv"
     results_filename = 'eval.json'
 
@@ -71,10 +71,11 @@ if __name__ == "__main__":
     # create the model
     model = vlaai()
     model.compile(tf.keras.optimizers.Adam(), loss=pearson_loss, metrics=[pearson_metric])
-    model_path = os.path.join(results_folder, "model.h5")
+    model_path = os.path.join(results_folder, "vlaai.h5")
 
     if only_evaluate:
-        model = tf.keras.models.load_model(model_path)
+        #model = tf.keras.models.load_model(model_path)
+        model.load_weights(model_path)
     else:
 
         train_files = [x for x in glob.glob(os.path.join(data_folder, "train_-_*")) if os.path.basename(x).split("_-_")[-1].split(".")[0] in features]
